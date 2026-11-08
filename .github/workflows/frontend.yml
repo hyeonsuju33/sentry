@@ -20,7 +20,7 @@ env:
 jobs:
   files-changed:
     name: detect what files changed
-    runs-on: ubuntu-24.04
+    runs-on: xenoci-2vcpu-ubuntu-2404
     timeout-minutes: 3
     permissions:
       contents: read
@@ -56,7 +56,7 @@ jobs:
         router: ['6', '8']
     env:
       SENTRY_REACT_ROUTER_VERSION: ${{ matrix.router }}
-    runs-on: ubuntu-24.04
+    runs-on: xenoci-2vcpu-ubuntu-2404
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
 
@@ -76,7 +76,7 @@ jobs:
     if: needs.files-changed.outputs.frontend_lint == 'true'
     needs: files-changed
     name: oxlint
-    runs-on: ubuntu-24.04
+    runs-on: xenoci-2vcpu-ubuntu-2404
     timeout-minutes: 15
     outputs:
       budgets: ${{ steps.ratchet.outputs.budgets }}
@@ -160,7 +160,7 @@ jobs:
     if: needs.files-changed.outputs.frontend_all == 'true'
     needs: files-changed
     name: ${{ matrix.command }}
-    runs-on: ubuntu-24.04
+    runs-on: xenoci-2vcpu-ubuntu-2404
     strategy:
       fail-fast: false
       matrix:
@@ -176,7 +176,7 @@ jobs:
   jest-config:
     if: needs.files-changed.outputs.testable_rules_changed == 'true' || needs.files-changed.outputs.testable_modified == 'true'
     name: Configure Jest
-    runs-on: ubuntu-24.04
+    runs-on: xenoci-2vcpu-ubuntu-2404
     timeout-minutes: 3
     needs: files-changed
     outputs:
@@ -214,7 +214,7 @@ jobs:
     name: Jest (router v${{ matrix.router }}, shard ${{ matrix.index }})
     # If you change the runs-on image, you must also change the runner in jest-balance.yml
     # so that the balancer runs in the same environment as the tests.
-    runs-on: ubuntu-24.04
+    runs-on: xenoci-2vcpu-ubuntu-2404
     timeout-minutes: 30
     strategy:
       # This helps not having to run multiple jobs because one fails, thus, reducing resource usage
@@ -289,7 +289,7 @@ jobs:
     if: needs.files-changed.outputs.frontend_all == 'true'
     needs: files-changed
     name: form field registry
-    runs-on: ubuntu-24.04
+    runs-on: xenoci-2vcpu-ubuntu-2404
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
 
@@ -314,7 +314,7 @@ jobs:
     if: needs.files-changed.outputs.embed_widget_schema == 'true'
     needs: files-changed
     name: embed widgets
-    runs-on: ubuntu-24.04
+    runs-on: xenoci-2vcpu-ubuntu-2404
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
 
@@ -353,7 +353,7 @@ jobs:
     name: Frontend
     # This is necessary since a failed/skipped dependent job would cause this job to be skipped
     if: always()
-    runs-on: ubuntu-24.04
+    runs-on: xenoci-2vcpu-ubuntu-2404
     steps:
       # If any jobs we depend on fail, we will fail since this is a required check
       # NOTE: A timeout is considered a failure

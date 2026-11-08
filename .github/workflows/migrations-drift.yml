@@ -21,7 +21,7 @@ defaults:
 jobs:
   drift:
     name: migration drift
-    runs-on: ubuntu-24.04
+    runs-on: xenoci-2vcpu-ubuntu-2404
     timeout-minutes: 15
 
     steps:
